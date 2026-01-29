@@ -31,7 +31,6 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroidField = AsteroidField()
 
-
     while True:
         log_state()
 
@@ -41,12 +40,17 @@ def main():
             
         updatable.update(dt)
 
-
         for ast in asteroids:
             if ast.collides_with(player):
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()
+            
+            for shot in shots:
+                if ast.collides_with(shot):
+                    log_event("asteroid_shot")
+                    shot.kill()
+                    ast.split()
 
         screen.fill("Black")
 
